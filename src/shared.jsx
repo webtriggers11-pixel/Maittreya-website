@@ -62,7 +62,7 @@ function Nav() {
   const links = [
     { href: '/', label: 'Home' },
     { href: '/services', label: 'Services', dropdown: true },
-    { href: '/about', label: 'About' },
+    { href: '/about', label: 'About Us' },
     { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' },
   ];
@@ -95,7 +95,7 @@ function Nav() {
             </div>
           ) : (
             <a key={l.href} href={l.href} onClick={(e) => { e.preventDefault(); go(l.href); }}
-              className={`px-4 py-2 rounded-full font-sans text-[14px] font-medium transition-all ${path === l.href ? 'text-midnight' : 'text-ink hover:text-midnight'}`}>
+              className={`px-4 py-2 rounded-full font-sans text-[14px] font-medium transition-all ${(path === l.href || (l.href !== '/' && path.startsWith(l.href + '/'))) ? 'text-midnight' : 'text-ink hover:text-midnight'}`}>
               {l.label}
             </a>
           ))}
@@ -302,11 +302,13 @@ function FormField({ label, error, hint, children }) {
 }
 
 // FAQ Accordion (shared)
-function FAQItem({ q, a }) {
-  const [open, setOpen] = useState(false);
+function FAQItem({ q, a, open: openProp, onToggle }) {
+  const [openInternal, setOpenInternal] = useState(false);
+  const open = openProp !== undefined ? openProp : openInternal;
+  const handleToggle = onToggle ?? (() => setOpenInternal(!openInternal));
   return (
     <div className="reveal">
-      <button onClick={() => setOpen(!open)} className="w-full text-left py-6 flex items-start justify-between gap-6 group">
+      <button onClick={handleToggle} className="w-full text-left py-6 flex items-start justify-between gap-6 group">
         <span className="font-display font-bold text-[17px] md:text-[19px] text-ink group-hover:text-midnight transition-colors">{q}</span>
         <span className={`shrink-0 w-8 h-8 rounded-full border border-line grid place-items-center transition-all ${open ? 'bg-midnight text-paper border-midnight rotate-45' : 'text-midnight'}`}>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>

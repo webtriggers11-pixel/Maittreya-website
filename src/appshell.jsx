@@ -105,7 +105,10 @@ export default function App() {
   const go = (to) => {
     const [route] = to.split('#');
     const next = route || '/';
-    if (next !== pathRef.current) setNavLoading(true);
+    if (next !== pathRef.current) {
+      setNavLoading(true);
+      window.scrollTo(0, 0);
+    }
     window.location.hash = to;
     setPath(next);
   };
@@ -146,10 +149,8 @@ export default function App() {
     label = '/';
   }
 
-  const navPath = path.startsWith('/blog') ? '/blog' : path;
-
   return (
-    <RouterCtx.Provider value={{ path: navPath, go }}>
+    <RouterCtx.Provider value={{ path, go }}>
       <AnimatePresence>
         {navLoading && (
           <motion.div

@@ -18,7 +18,7 @@ function AboutPage() {
         <Section>
           <div className="grid md:grid-cols-12 gap-10 items-end">
             <div className="md:col-span-8 reveal">
-              <Eyebrow>About</Eyebrow>
+              <Eyebrow>About Us</Eyebrow>
               <h1 className="mt-5 font-display font-extrabold text-[44px] md:text-[76px] leading-[1.02] text-ink">
                 A focused studio for<br/>
                 <span className="text-midnight">growth and product.</span>

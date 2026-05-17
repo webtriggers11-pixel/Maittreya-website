@@ -7,7 +7,6 @@ import {
   Banner,
   SERVICES,
 } from './shared.jsx';
-import { ServiceFlipCard } from './home.jsx';
 
 function ServicesPage() {
   const { go } = useRouter();
@@ -43,19 +42,6 @@ function ServicesPage() {
                 so every channel reinforces the others.
               </p>
             </div>
-          </div>
-        </Section>
-      </section>
-
-      {/* FLIP CARD GRID */}
-      <section className="pb-24">
-        <Section>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((s, i) => (
-              <div key={s.id} id={s.id} className="reveal" style={{ transitionDelay: `${i*50}ms`, scrollMarginTop: 100 }}>
-                <ServiceFlipCard s={s} onClick={() => go('/contact')} />
-              </div>
-            ))}
           </div>
         </Section>
       </section>

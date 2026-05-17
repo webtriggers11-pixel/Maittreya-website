@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   useRouter,
@@ -62,9 +62,6 @@ function ServiceFlipCard({ s, onClick }) {
           <div className="p-6">
             <h3 className="font-display font-bold text-[20px] text-ink">{s.title}</h3>
             <p className="mt-2 text-[13px] text-ink-soft leading-relaxed line-clamp-3">{s.desc}</p>
-            <div className="mt-4 inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-midnight">
-              Flip for more <span>→</span>
-            </div>
           </div>
         </div>
         <div className="flip-face flip-back rounded-2xl bg-midnight text-paper p-7 flex flex-col">
@@ -112,7 +109,7 @@ function ProcessSection() {
       <Section>
         <div className="reveal max-w-2xl mb-10 md:mb-14">
           <Eyebrow>How we work</Eyebrow>
-          <h2 className="mt-4 font-display font-extrabold text-[32px] md:text-[48px] leading-[1.05] text-ink">
+          <h2 className="mt-4 font-display font-extrabold text-[38px] md:text-[56px] leading-[1.05] text-ink">
             A clear process from day one.
           </h2>
           <p className="mt-4 text-[15px] md:text-[16px] text-ink-soft leading-relaxed max-w-xl">
@@ -150,7 +147,7 @@ function ProcessSection() {
 
 function HeroVisualBand() {
   return (
-    <Section className="mt-2 md:mt-6 pb-16 md:pb-20">
+    <Section className="mt-2 md:mt-4 pb-8 md:pb-12">
       <motion.div
         className="relative w-full overflow-hidden rounded-2xl border border-midnight/20 bg-midnight aspect-[4/3] md:aspect-[21/9] shadow-xl shadow-midnight/15"
         initial={{ opacity: 0, y: 14 }}
@@ -170,7 +167,7 @@ function HeroVisualBand() {
         </div>
         <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-12">
           <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-cyan/95">Capabilities</p>
-          <p className="mt-3 max-w-xl font-display text-[18px] font-semibold leading-snug text-paper md:text-[22px]">
+          <p className="mt-3 max-w-xl font-display text-[16px] font-semibold leading-snug text-paper md:text-[20px]">
             Strategy, creative, product engineering, and analytics — one senior-led team from brief to launch.
           </p>
         </div>
@@ -190,12 +187,11 @@ function FinalCtaBand({ go }) {
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
         >
-          <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-cyan">Next step</p>
-          <h2 className="mt-4 font-display font-extrabold text-[28px] md:text-[44px] leading-tight max-w-2xl mx-auto">
+          <h2 className="font-display font-extrabold text-[28px] md:text-[44px] leading-tight max-w-2xl mx-auto">
             Ready to grow your business?
           </h2>
           <p className="mt-4 text-[15px] text-paper/75 max-w-lg mx-auto leading-relaxed">
-            Book a free consultation — we will reply with sharp questions, not a generic deck.
+            We will reply with sharp questions, not a generic deck.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <motion.button
@@ -205,7 +201,7 @@ function FinalCtaBand({ go }) {
               onClick={() => go('/contact')}
               className="bg-cyan text-midnight inline-flex items-center gap-2 px-8 py-4 rounded-full font-sans text-[15px] font-semibold shadow-lg shadow-black/20 hover:bg-paper transition-colors"
             >
-              Get free consultation <span aria-hidden>→</span>
+              Get Consultation <span aria-hidden>→</span>
             </motion.button>
             <button
               type="button"
@@ -233,7 +229,6 @@ function HomePage() {
         <div className="hero-ambient absolute inset-0 min-h-full">
           <div className="hero-ambient-shine" />
           <div className="hero-ambient-shine hero-ambient-shine-lower" />
-          <div className="hero-ambient-grid" />
           <div className="hero-ambient-noise" />
         </div>
         <div className="absolute top-[-6%] right-[-6%] w-[min(92vw,520px)] h-[min(92vw,520px)] max-w-[520px] max-h-[520px] rounded-full blob-a blur-[3px]" style={{ background: 'radial-gradient(closest-side, rgba(170,238,255,0.78), transparent)' }} />
@@ -251,9 +246,6 @@ function HomePage() {
             animate="visible"
             variants={stagger}
           >
-            <motion.div variants={fadeUp}>
-              <Eyebrow>Digital + product</Eyebrow>
-            </motion.div>
             <motion.h1
               variants={fadeUp}
               className="mt-5 md:mt-6 font-display font-extrabold text-[40px] sm:text-[52px] md:text-[64px] lg:text-[72px] leading-[1.03] text-ink tracking-tight"
@@ -273,15 +265,8 @@ function HomePage() {
                 onClick={() => go('/contact')}
                 className="btn-primary inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-sans text-[15px] font-semibold w-fit"
               >
-                Get free consultation <span aria-hidden>→</span>
+                Get Consultation <span aria-hidden>→</span>
               </motion.button>
-              <button
-                type="button"
-                onClick={() => go('/services')}
-                className="text-left text-[15px] font-medium text-midnight underline underline-offset-[6px] decoration-midnight/30 hover:decoration-midnight hover:text-midnight-700 transition-colors w-fit"
-              >
-                Browse services
-              </button>
             </motion.div>
           </motion.div>
         </Section>
@@ -294,7 +279,7 @@ function HomePage() {
         <Section>
           <div className="reveal max-w-2xl mb-10 md:mb-14">
             <Eyebrow>Why choose us</Eyebrow>
-            <h2 className="mt-4 font-display font-extrabold text-[32px] md:text-[48px] leading-[1.06] text-ink">
+            <h2 className="mt-4 font-display font-extrabold text-[38px] md:text-[56px] leading-[1.06] text-ink">
               What makes us different.
             </h2>
             <p className="mt-4 text-[15px] md:text-[16px] text-ink-soft leading-relaxed max-w-xl">
@@ -337,17 +322,11 @@ function HomePage() {
       {/* SERVICES */}
       <section className="py-16 md:py-24 bg-cyan-soft/35 backdrop-blur-[2px]">
         <Section>
-          <div className="reveal mb-10 md:mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div className="reveal mb-10 md:mb-14">
             <div className="max-w-2xl">
               <Eyebrow>Services</Eyebrow>
-              <h2 className="mt-4 font-display font-extrabold text-[32px] md:text-[48px] leading-[1.06] text-ink">Everything under one roof.</h2>
-              <p className="mt-4 text-[15px] text-ink-soft leading-relaxed">
-                Hover a card to flip. Click through for detail.
-              </p>
+              <h2 className="mt-4 font-display font-extrabold text-[38px] md:text-[56px] leading-[1.06] text-ink">Everything under one roof.</h2>
             </div>
-            <button type="button" onClick={() => go('/services')} className="btn-ghost self-start md:self-end inline-flex items-center gap-2 px-6 py-3 rounded-full font-sans text-[13px] font-semibold shrink-0">
-              Full list <span>→</span>
-            </button>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -370,7 +349,6 @@ function HomePage() {
           <div className="grid md:grid-cols-12 gap-10 md:gap-12">
             <div className="md:col-span-5 reveal">
               <Eyebrow>FAQ</Eyebrow>
-              <h2 className="mt-4 font-display font-extrabold text-[30px] md:text-[40px] leading-[1.08] text-ink">Straight answers.</h2>
               <p className="mt-4 text-[15px] text-ink-soft leading-relaxed">
                 Still unsure?{' '}
                 <button type="button" onClick={() => go('/contact')} className="text-midnight font-medium underline underline-offset-2 hover:text-midnight-700">
@@ -379,17 +357,7 @@ function HomePage() {
                 .
               </p>
             </div>
-            <div className="md:col-span-7 divide-y divide-line border-y border-line">
-              {[
-                ['What is digital marketing?', 'Digital marketing is the use of online channels — search, social, email, content, and paid ads — to attract, engage, and convert customers. It covers everything from SEO to influencer campaigns.'],
-                ['What does digital marketing offer?', 'Measurable reach, targeted audiences, lower cost per acquisition than traditional channels, and rich data to refine every campaign in real time.'],
-                ['What are the advantages of digital marketing?', 'You can reach the right audience at the right moment, track spend, iterate quickly, and build long-term assets like SEO and owned content.'],
-                ['What is the 3-pillar strategy?', 'Our framework: 1) Foundations (SEO, site, brand), 2) Demand creation (content, social, video), 3) Demand capture (ads, conversion optimisation). Each pillar feeds the next.'],
-                ['What marketing activities do you run?', 'SEO, content, social, Google Ads, video, websites, product builds, and brand identity — one channel or the full mix.'],
-              ].map(([q, a]) => (
-                <FAQItem key={q} q={q} a={a} />
-              ))}
-            </div>
+            <FaqAccordion />
           </div>
         </Section>
       </section>
@@ -430,6 +398,31 @@ function HomePage() {
   );
 }
 
+const FAQ_ITEMS = [
+  ['What is digital marketing?', 'Digital marketing is the use of online channels — search, social, email, content, and paid ads — to attract, engage, and convert customers. It covers everything from SEO to influencer campaigns.'],
+  ['What does digital marketing offer?', 'Measurable reach, targeted audiences, lower cost per acquisition than traditional channels, and rich data to refine every campaign in real time.'],
+  ['What are the advantages of digital marketing?', 'You can reach the right audience at the right moment, track spend, iterate quickly, and build long-term assets like SEO and owned content.'],
+  ['What is the 3-pillar strategy?', 'Our framework: 1) Foundations (SEO, site, brand), 2) Demand creation (content, social, video), 3) Demand capture (ads, conversion optimisation). Each pillar feeds the next.'],
+  ['What marketing activities do you run?', 'SEO, content, social, Google Ads, video, websites, product builds, and brand identity — one channel or the full mix.'],
+];
+
+function FaqAccordion() {
+  const [openIdx, setOpenIdx] = useState(null);
+  return (
+    <div className="md:col-span-7 divide-y divide-line border-y border-line">
+      {FAQ_ITEMS.map(([q, a], i) => (
+        <FAQItem
+          key={q}
+          q={q}
+          a={a}
+          open={openIdx === i}
+          onToggle={() => setOpenIdx(openIdx === i ? null : i)}
+        />
+      ))}
+    </div>
+  );
+}
+
 function BlogCarousel() {
   const { go } = useRouter();
   const scrollerRef = useRef(null);
@@ -449,9 +442,7 @@ function BlogCarousel() {
       <Section>
         <div className="reveal mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
           <div>
-            <Eyebrow>Journal</Eyebrow>
-            <h2 className="mt-4 font-display font-extrabold text-[32px] md:text-[48px] leading-[1.06] text-ink">Latest from the blog.</h2>
-            <p className="mt-3 text-[15px] text-ink-soft max-w-lg">Ideas on SEO, product, and how we work.</p>
+            <h2 className="font-display font-extrabold text-[32px] md:text-[48px] leading-[1.06] text-ink">Latest from the blog.</h2>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <button type="button" onClick={() => scroll(-1)} aria-label="Previous" className="w-11 h-11 rounded-full border border-line bg-paper grid place-items-center text-midnight hover:bg-midnight hover:text-paper transition-colors duration-200">
