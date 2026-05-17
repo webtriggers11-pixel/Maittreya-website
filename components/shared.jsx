@@ -46,8 +46,18 @@ function Logo({ tone = 'dark' }) {
   );
 }
 
+// Pages where the top of the viewport is a dark background — nav starts transparent/light
+const DARK_HERO_PATHS = ['/', /^\/services\/.+/];
+
+function hasDarkHero(pathname) {
+  return DARK_HERO_PATHS.some((p) =>
+    typeof p === 'string' ? pathname === p : p.test(pathname)
+  );
+}
+
 function Nav() {
   const pathname = usePathname();
+  const darkHero = hasDarkHero(pathname);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
@@ -58,7 +68,7 @@ function Nav() {
     onScroll();
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => { setMobileOpen(false); setDropOpen(false); }, [pathname]);
 
@@ -75,11 +85,14 @@ function Nav() {
   const isActive = (href) =>
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
+  // Show light (white) text only when over a dark hero and not yet scrolled
+  const light = darkHero && !scrolled;
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? 'bg-paper/90 backdrop-blur-md border-b border-line shadow-[0_4px_20px_-12px_rgba(0,73,83,0.12)]' : 'bg-transparent'}`}>
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-[76px] flex items-center justify-between">
         <Link href="/" className="shrink-0">
-          <Logo tone={scrolled ? 'dark' : 'light'} />
+          <Logo tone={light ? 'light' : 'dark'} />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -87,9 +100,9 @@ function Nav() {
             <div key={l.href} className="relative" ref={dropRef} onMouseEnter={() => setDropOpen(true)} onMouseLeave={() => setDropOpen(false)}>
               <Link href={l.href}
                 className={`flex items-center gap-1 px-4 py-2 rounded-full font-sans text-[14px] font-medium transition-all duration-200
-                  ${scrolled
-                    ? isActive(l.href) ? 'bg-midnight/8 text-midnight font-semibold' : 'text-ink hover:text-midnight hover:bg-midnight/5'
-                    : isActive(l.href) ? 'bg-paper/15 text-paper font-semibold' : 'text-paper/75 hover:text-paper hover:bg-paper/10'
+                  ${light
+                    ? isActive(l.href) ? 'bg-paper/15 text-paper font-semibold' : 'text-paper/75 hover:text-paper hover:bg-paper/10'
+                    : isActive(l.href) ? 'bg-midnight/8 text-midnight font-semibold' : 'text-ink hover:text-midnight hover:bg-midnight/5'
                   }`}>
                 {l.label}
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className={`transition-transform ${dropOpen ? 'rotate-180' : ''}`}><path d="m2 4 3 3 3-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
@@ -108,9 +121,9 @@ function Nav() {
           ) : (
             <Link key={l.href} href={l.href}
               className={`px-4 py-2 rounded-full font-sans text-[14px] font-medium transition-all duration-200
-                ${scrolled
-                  ? isActive(l.href) ? 'bg-midnight/8 text-midnight font-semibold' : 'text-ink hover:text-midnight hover:bg-midnight/5'
-                  : isActive(l.href) ? 'bg-paper/15 text-paper font-semibold' : 'text-paper/75 hover:text-paper hover:bg-paper/10'
+                ${light
+                  ? isActive(l.href) ? 'bg-paper/15 text-paper font-semibold' : 'text-paper/75 hover:text-paper hover:bg-paper/10'
+                  : isActive(l.href) ? 'bg-midnight/8 text-midnight font-semibold' : 'text-ink hover:text-midnight hover:bg-midnight/5'
                 }`}>
               {l.label}
             </Link>
@@ -120,9 +133,9 @@ function Nav() {
         <div className="hidden md:block">
           <Link href="/contact"
             className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-sans text-[13px] font-semibold transition-all duration-200
-              ${scrolled
-                ? 'bg-midnight text-paper hover:bg-midnight-700 hover:shadow-md hover:shadow-midnight/20'
-                : 'border border-paper/35 text-paper hover:bg-paper/10 hover:border-paper/60'
+              ${light
+                ? 'border border-paper/35 text-paper hover:bg-paper/10 hover:border-paper/60'
+                : 'bg-midnight text-paper hover:bg-midnight-700 hover:shadow-md hover:shadow-midnight/20'
               }`}>
             Let's Talk
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m-3-3 3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -130,14 +143,14 @@ function Nav() {
         </div>
 
         <button
-          className={`md:hidden w-10 h-10 grid place-items-center rounded-lg transition-colors ${scrolled ? 'hover:bg-line/60' : 'hover:bg-paper/10'}`}
+          className={`md:hidden w-10 h-10 grid place-items-center rounded-lg transition-colors ${light ? 'hover:bg-paper/10' : 'hover:bg-line/60'}`}
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Menu"
         >
           <div className="space-y-[5px]">
-            <span className={`block w-5 h-[2px] transition-all ${scrolled ? 'bg-midnight' : 'bg-paper'} ${mobileOpen ? 'translate-y-[7px] rotate-45' : ''}`}></span>
-            <span className={`block w-5 h-[2px] transition-all ${scrolled ? 'bg-midnight' : 'bg-paper'} ${mobileOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`block w-5 h-[2px] transition-all ${scrolled ? 'bg-midnight' : 'bg-paper'} ${mobileOpen ? '-translate-y-[7px] -rotate-45' : ''}`}></span>
+            <span className={`block w-5 h-[2px] transition-all ${light ? 'bg-paper' : 'bg-midnight'} ${mobileOpen ? 'translate-y-[7px] rotate-45' : ''}`}></span>
+            <span className={`block w-5 h-[2px] transition-all ${light ? 'bg-paper' : 'bg-midnight'} ${mobileOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`block w-5 h-[2px] transition-all ${light ? 'bg-paper' : 'bg-midnight'} ${mobileOpen ? '-translate-y-[7px] -rotate-45' : ''}`}></span>
           </div>
         </button>
       </div>
@@ -180,7 +193,7 @@ function Footer() {
             <ul className="space-y-3 text-[14px]">
               {SERVICES.map((s) => (
                 <li key={s.id}>
-                  <Link href={`/services#${s.id}`} className="text-paper/80 hover:text-cyan transition-colors">{s.title}</Link>
+                  <Link href={s.href} className="text-paper/80 hover:text-cyan transition-colors">{s.title}</Link>
                 </li>
               ))}
             </ul>
