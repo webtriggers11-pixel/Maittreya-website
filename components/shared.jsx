@@ -2,18 +2,19 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 
 // Shared services list
 const SERVICES = [
-  { id: 'seo', title: 'SEO', desc: 'Keyword research, on-page, off-page and technical SEO that compounds traffic month over month.', img: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=900&q=80', tags: ['On-page', 'Technical', 'Off-page'] },
-  { id: 'social', title: 'Social Media Marketing', desc: 'Strategy, content, and community management that grows engagement and brand affinity.', img: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=900&q=80', tags: ['Strategy', 'Creative', 'Community'] },
-  { id: 'content', title: 'Content Writing', desc: 'Engaging, value-driven content built around your audience and search intent.', img: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80', tags: ['Long-form', 'SEO copy', 'Editorial'] },
-  { id: 'ads', title: 'Google Ads', desc: 'Targeted search and display campaigns built to maximize ROI on every rupee spent.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80', tags: ['Search', 'Display', 'Performance'] },
-  { id: 'web', title: 'Website Development', desc: 'Responsive, fast, user-friendly websites with ongoing support and maintenance.', img: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?w=900&q=80', tags: ['Responsive', 'CMS', 'Maintenance'] },
-  { id: 'product', title: 'Software & Product Development', desc: 'MVPs, web apps, and internal tools — discovery through launch, with maintainable code and clear handoff.', img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80', tags: ['React', 'APIs', 'Shipping'] },
-  { id: 'video', title: 'Video Editing', desc: 'Professional edits, transitions, and audio mixing for ads, reels, and brand films.', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=900&q=80', tags: ['Reels', 'Ads', 'Brand films'] },
-  { id: 'logo', title: 'Logo Design', desc: 'Distinctive brand identities — marks, wordmarks, and the system around them.', img: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=900&q=80', tags: ['Identity', 'Wordmark', 'Guidelines'] },
+  { id: 'seo', title: 'SEO', href: '/services/search-engine-optimization', desc: 'Keyword research, on-page, off-page and technical SEO that compounds traffic month over month.', img: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=900&q=80', tags: ['On-page', 'Technical', 'Off-page'] },
+  { id: 'social', title: 'Social Media Marketing', href: '/services/social-media', desc: 'Strategy, content, and community management that grows engagement and brand affinity.', img: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=900&q=80', tags: ['Strategy', 'Creative', 'Community'] },
+  { id: 'content', title: 'Content Writing', href: '/services/content-writing', desc: 'Engaging, value-driven content built around your audience and search intent.', img: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80', tags: ['Long-form', 'SEO copy', 'Editorial'] },
+  { id: 'ads', title: 'Google Ads', href: '/services/google-ads', desc: 'Targeted search and display campaigns built to maximize ROI on every rupee spent.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80', tags: ['Search', 'Display', 'Performance'] },
+  { id: 'web', title: 'Website Development', href: '/services/website-development', desc: 'Responsive, fast, user-friendly websites with ongoing support and maintenance.', img: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?w=900&q=80', tags: ['Responsive', 'CMS', 'Maintenance'] },
+  { id: 'product', title: 'Software & Product Development', href: '/services#product', desc: 'MVPs, web apps, and internal tools — discovery through launch, with maintainable code and clear handoff.', img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80', tags: ['React', 'APIs', 'Shipping'] },
+  { id: 'video', title: 'Video Editing', href: '/services#video', desc: 'Professional edits, transitions, and audio mixing for ads, reels, and brand films.', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=900&q=80', tags: ['Reels', 'Ads', 'Brand films'] },
+  { id: 'logo', title: 'Logo Design', href: '/services/logo-design', desc: 'Distinctive brand identities — marks, wordmarks, and the system around them.', img: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=900&q=80', tags: ['Identity', 'Wordmark', 'Guidelines'] },
 ];
 
 function useReveal() {
@@ -69,7 +70,7 @@ function Nav() {
     { href: '/contact', label: 'Contact' },
   ];
 
-  const dropItems = SERVICES.map((s) => [s.title, `/services#${s.id}`]);
+  const dropItems = SERVICES.map((s) => [s.title, s.href]);
 
   const isActive = (href) =>
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
@@ -77,13 +78,19 @@ function Nav() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? 'bg-paper/90 backdrop-blur-md border-b border-line shadow-[0_4px_20px_-12px_rgba(0,73,83,0.12)]' : 'bg-transparent'}`}>
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-[76px] flex items-center justify-between">
-        <Link href="/" className="shrink-0"><Logo /></Link>
+        <Link href="/" className="shrink-0">
+          <Logo tone={scrolled ? 'dark' : 'light'} />
+        </Link>
 
         <nav className="hidden md:flex items-center gap-1">
           {links.map((l) => l.dropdown ? (
             <div key={l.href} className="relative" ref={dropRef} onMouseEnter={() => setDropOpen(true)} onMouseLeave={() => setDropOpen(false)}>
               <Link href={l.href}
-                className={`flex items-center gap-1 px-4 py-2 rounded-full font-sans text-[14px] font-medium transition-all ${isActive(l.href) ? 'text-midnight' : 'text-ink hover:text-midnight'}`}>
+                className={`flex items-center gap-1 px-4 py-2 rounded-full font-sans text-[14px] font-medium transition-all duration-200
+                  ${scrolled
+                    ? isActive(l.href) ? 'bg-midnight/8 text-midnight font-semibold' : 'text-ink hover:text-midnight hover:bg-midnight/5'
+                    : isActive(l.href) ? 'bg-paper/15 text-paper font-semibold' : 'text-paper/75 hover:text-paper hover:bg-paper/10'
+                  }`}>
                 {l.label}
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className={`transition-transform ${dropOpen ? 'rotate-180' : ''}`}><path d="m2 4 3 3 3-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
               </Link>
@@ -100,7 +107,11 @@ function Nav() {
             </div>
           ) : (
             <Link key={l.href} href={l.href}
-              className={`px-4 py-2 rounded-full font-sans text-[14px] font-medium transition-all ${isActive(l.href) ? 'text-midnight' : 'text-ink hover:text-midnight'}`}>
+              className={`px-4 py-2 rounded-full font-sans text-[14px] font-medium transition-all duration-200
+                ${scrolled
+                  ? isActive(l.href) ? 'bg-midnight/8 text-midnight font-semibold' : 'text-ink hover:text-midnight hover:bg-midnight/5'
+                  : isActive(l.href) ? 'bg-paper/15 text-paper font-semibold' : 'text-paper/75 hover:text-paper hover:bg-paper/10'
+                }`}>
               {l.label}
             </Link>
           ))}
@@ -108,17 +119,25 @@ function Nav() {
 
         <div className="hidden md:block">
           <Link href="/contact"
-            className="btn-primary inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-sans text-[13px] font-semibold bg-midnight text-paper hover:bg-midnight-700 transition-colors">
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-sans text-[13px] font-semibold transition-all duration-200
+              ${scrolled
+                ? 'bg-midnight text-paper hover:bg-midnight-700 hover:shadow-md hover:shadow-midnight/20'
+                : 'border border-paper/35 text-paper hover:bg-paper/10 hover:border-paper/60'
+              }`}>
             Let's Talk
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m-3-3 3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </Link>
         </div>
 
-        <button className="md:hidden w-10 h-10 grid place-items-center rounded-lg hover:bg-line/60" onClick={() => setMobileOpen((v) => !v)} aria-label="Menu">
+        <button
+          className={`md:hidden w-10 h-10 grid place-items-center rounded-lg transition-colors ${scrolled ? 'hover:bg-line/60' : 'hover:bg-paper/10'}`}
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label="Menu"
+        >
           <div className="space-y-[5px]">
-            <span className={`block w-5 h-[2px] bg-midnight transition-transform ${mobileOpen ? 'translate-y-[7px] rotate-45' : ''}`}></span>
-            <span className={`block w-5 h-[2px] bg-midnight transition-opacity ${mobileOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`block w-5 h-[2px] bg-midnight transition-transform ${mobileOpen ? '-translate-y-[7px] -rotate-45' : ''}`}></span>
+            <span className={`block w-5 h-[2px] transition-all ${scrolled ? 'bg-midnight' : 'bg-paper'} ${mobileOpen ? 'translate-y-[7px] rotate-45' : ''}`}></span>
+            <span className={`block w-5 h-[2px] transition-all ${scrolled ? 'bg-midnight' : 'bg-paper'} ${mobileOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`block w-5 h-[2px] transition-all ${scrolled ? 'bg-midnight' : 'bg-paper'} ${mobileOpen ? '-translate-y-[7px] -rotate-45' : ''}`}></span>
           </div>
         </button>
       </div>
@@ -206,8 +225,14 @@ function Eyebrow({ children, dark = false }) {
 function Banner({ src, alt, ratio = '16/9', overlay = true, className = '', children }) {
   return (
     <div className={`relative overflow-hidden rounded-2xl bg-midnight ${className}`} style={{ aspectRatio: ratio }}>
-      <img src={src} alt={alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-[1.04]" />
-      {overlay && <div className="absolute inset-0 bg-gradient-to-tr from-midnight/40 via-midnight/5 to-transparent"></div>}
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover transition-transform duration-700 hover:scale-[1.04]"
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 800px"
+      />
+      {overlay && <div className="absolute inset-0 bg-gradient-to-tr from-midnight/40 via-midnight/5 to-transparent" />}
       {children && <div className="absolute inset-0">{children}</div>}
     </div>
   );
@@ -285,10 +310,6 @@ function LeadForm({ compact = false }) {
       <button type="submit" disabled={submitting} className="btn-primary w-full md:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-sans text-[14px] font-semibold bg-midnight text-paper disabled:opacity-60">
         {submitting ? <><span className="w-4 h-4 border-2 border-paper/40 border-t-paper rounded-full animate-spin"></span> Sending…</> : <>Submit <span>→</span></>}
       </button>
-      <style>{`
-        .form-input { width: 100%; padding: 12px 14px; background: #FDFEFE; border: 1px solid #E6ECEE; border-radius: 12px; font-size: 14px; color: #0B1418; transition: border-color 200ms, box-shadow 200ms; font-family: 'Inter', system-ui, sans-serif; }
-        .form-input:focus { outline: none; border-color: #004953; box-shadow: 0 0 0 4px rgba(0,73,83,0.08); }
-      `}</style>
     </form>
   );
 }

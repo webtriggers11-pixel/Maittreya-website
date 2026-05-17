@@ -10,11 +10,16 @@ const config = {
         midnight: {
           DEFAULT: '#004953',
           700: '#003d44',
+          800: '#003240',
           900: '#002a2f',
         },
         cyan: {
           DEFAULT: '#AAEEFF',
           soft: 'rgba(170, 238, 255, 0.2)',
+        },
+        amber: {
+          DEFAULT: '#E8A020',
+          hover: '#d4911a',
         },
         paper: '#FDFEFE',
         ink: {
@@ -36,4 +41,4 @@ const config = {
   plugins: [],
 };
 
-export default config;
+module.exports = config;

@@ -1,9 +1,14 @@
 import { HomePage } from '@/components/home';
 
 export const metadata = {
-  title: 'Maittreya Digital Services — Growth & Product for Startups',
+  title: 'Maittreya Digital Services — Digital Marketing & Web Development',
   description:
-    'Senior-led digital marketing and software development for startups in India and the US. SEO, content, ads, web, and product engineering.',
+    'Get measurable business growth with strategic digital marketing services including SEO, PPC, social media, and performance marketing.',
+  openGraph: {
+    title: 'ROI-Focused Digital Marketing Services | Maittreya Digital Services',
+    description:
+      'Get measurable business growth with strategic digital marketing services including SEO, Google Ads, social media, and performance marketing.',
+  },
 };
 
 export default function Page() {
